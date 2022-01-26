@@ -1,8 +1,13 @@
 //Home page - Landing page//
+import Layout from '../components/Layout'
 
 const Index = () => {
-    console.log('this is the index page');
-    return <h2> Index page </h2>
+   
+    return (
+        <Layout>
+            <h2> Index </h2>
+        </Layout>
+    )
 } 
 
 export default Index;
