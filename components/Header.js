@@ -1,3 +1,4 @@
+//to use hooks 
 import { useState } from 'react';
 import {
   Collapse,
@@ -14,6 +15,7 @@ import {
 } from 'reactstrap';
 
 const Header = () => {
+    //hook//
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
