@@ -1,22 +1,57 @@
+import { useState } from 'react';
+
 const SignupComponent = () => {
-
+const [values, setValues] = useState({
+    name: '',
+    email: '',
+    password: '',
+    error: '',
+    loading: 'false',
+    message: '',
+    showForm: true
+})
+//destructure
+const {name, email, password, error, loading, message, showForm} = values
 /////////////////////////SetState Methods///////////////////////////////////////
-const handleSubmit = (e) => {
+const handleSubmit = e => {
         e.preventDefault();
-        console.log('handle submit')
+        console.table({name, email, password, error, loading, message, showForm})
     }
-    const handleChange = (e) => {
-        e.preventDefault();
-        console.log(e.target.value)
+    const handleChange = name => e => {
+        setValues({...values, error:false, [name]: e.target.value})
     }
-
 ///////////////////////////SIGNUP FORM /////////////////////////////////////
     const signupForm = () => {
         return (
             <form onSubmit={handleSubmit}>
+                
                 <div className="form-group">
-                    <input onChange={handleChange} type="text" className="form-control" placeholder="Type your name " />
+                    <input 
+                    value = {name}
+                    onChange={handleChange('name')} 
+                    type="text" className="form-control" 
+                    placeholder="Type your name " />
                 </div>
+                <div className="form-group">
+                    <input 
+                    value = {email}
+                    onChange={handleChange('email')} 
+                    type="email" className="form-control" 
+                    placeholder="Type your email " />
+                </div>
+                <div className="form-group">
+                    <input 
+                    value = {password}
+                    onChange={handleChange('password')} 
+                    type="password" className="form-control" 
+                    placeholder="Type your password " />
+                </div>
+
+                <div>
+                    <button className="btn btn-primary"> Sign Up</button>
+                </div>
+
+
             </form>
         )
     }
