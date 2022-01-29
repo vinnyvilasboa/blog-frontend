@@ -64,5 +64,5 @@ const handleSubmit = e => {
 
     )
 }
-
+//trial and error
 export default SignupComponent
