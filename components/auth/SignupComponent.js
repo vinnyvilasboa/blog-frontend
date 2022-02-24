@@ -44,6 +44,11 @@ const SignupComponent = () => {
     const handleChange = name => e => {
         setValues({ ...values, error: false, [name]: e.target.value })
     }
+
+    ///////////////////////////Sign-up messages /////////////////////////////////////
+    const showLoading = () => (loading ? <div className= "alert alert-info">Loading... </div> : '') 
+    const showError = () => (error ? <div className= "alert alert-danger">{error} </div> : '') 
+    const showMessage = () => (message ? <div className= "alert alert-info">{message} </div> : '') 
     ///////////////////////////SIGNUP FORM /////////////////////////////////////
     const signupForm = () => {
         return (
@@ -83,7 +88,10 @@ const SignupComponent = () => {
 
     return (
         <div>
-            {signupForm()}
+            {showError()}
+            {/* {showLoading()} */}
+            {showMessage()}
+            {showForm && signupForm()}
         </div>
 
     )
