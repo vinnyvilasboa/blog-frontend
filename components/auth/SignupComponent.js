@@ -1,50 +1,74 @@
 import { useState } from 'react';
+import { signup, signupForm } from '../../actions/auth'
 
 const SignupComponent = () => {
-const [values, setValues] = useState({
-    name: '',
-    email: '',
-    password: '',
-    error: '',
-    loading: 'false',
-    message: '',
-    showForm: true
-})
-//destructure
-const {name, email, password, error, loading, message, showForm} = values
-/////////////////////////SetState Methods///////////////////////////////////////
-const handleSubmit = e => {
+    const [values, setValues] = useState({
+        name: '',
+        email: '',
+        password: '',
+        error: '',
+        loading: 'false',
+        message: '',
+        showForm: true
+    })
+    //destructure
+    const { name, email, password, error, loading, message, showForm } = values
+    /////////////////////////SetState Methods///////////////////////////////////////
+    const handleSubmit = e => {
         e.preventDefault();
-        console.table({name, email, password, error, loading, message, showForm})
+        // console.table({name, email, password, error, loading, message, showForm})
+        setValues({ ...values, loading: true, error: false })
+        //creating user 
+        const user = { name, email, password }
+
+        signup(user).then(data => {
+                if (data.error) {
+                    setValues({ ...values, error: data.error, loading: false });
+                } else {
+                    setValues({
+                        ...values,
+                        name: '',
+                        email: '',
+                        password: '',
+                        error: '',
+                        loading: false,
+                        message: data.message,
+                        showForm: false
+                    })
+                }
+            })
+        //send the error with the below format as a string of error
+
+
     }
     const handleChange = name => e => {
-        setValues({...values, error:false, [name]: e.target.value})
+        setValues({ ...values, error: false, [name]: e.target.value })
     }
-///////////////////////////SIGNUP FORM /////////////////////////////////////
+    ///////////////////////////SIGNUP FORM /////////////////////////////////////
     const signupForm = () => {
         return (
             <form onSubmit={handleSubmit}>
-                
+
                 <div className="form-group">
-                    <input 
-                    value = {name}
-                    onChange={handleChange('name')} 
-                    type="text" className="form-control" 
-                    placeholder="Type your name " />
+                    <input
+                        value={name}
+                        onChange={handleChange('name')}
+                        type="text" className="form-control"
+                        placeholder="Type your name " />
                 </div>
                 <div className="form-group">
-                    <input 
-                    value = {email}
-                    onChange={handleChange('email')} 
-                    type="email" className="form-control" 
-                    placeholder="Type your email " />
+                    <input
+                        value={email}
+                        onChange={handleChange('email')}
+                        type="email" className="form-control"
+                        placeholder="Type your email " />
                 </div>
                 <div className="form-group">
-                    <input 
-                    value = {password}
-                    onChange={handleChange('password')} 
-                    type="password" className="form-control" 
-                    placeholder="Type your password " />
+                    <input
+                        value={password}
+                        onChange={handleChange('password')}
+                        type="password" className="form-control"
+                        placeholder="Type your password " />
                 </div>
 
                 <div>
@@ -55,10 +79,10 @@ const handleSubmit = e => {
             </form>
         )
     }
-///////////////////////////DISPLAY/////////////////////////////////////
+    ///////////////////////////DISPLAY/////////////////////////////////////
 
     return (
-        <div> 
+        <div>
             {signupForm()}
         </div>
 
