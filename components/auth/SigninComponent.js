@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { signin, signupForm } from '../../actions/auth'
-import  Router  from 'next/router'
+import { signin, authenticate } from '../../actions/auth'
+import Router from 'next/router'
 
 const SigninComponent = () => {
     const [values, setValues] = useState({
@@ -22,16 +22,19 @@ const SigninComponent = () => {
         const user = { email, password }
 
         signin(user).then(data => {
-                if (data.error) {
-                    setValues({ ...values, error: data.error, loading: false });
-                } else {
-                    //save user token to coookie
-                    //save user info to localstorage
-                    //authenticate user
+            if (data.error) {
+                setValues({ ...values, error: data.error, loading: false });
+            } else {
+                //save user token to coookie
+                //save user info to localstorage
+                //authenticate user
+                authenticate(data, () => {
                     Router.push(`/`)
-                    
-                }
-            })
+                })
+
+
+            }
+        })
         //send the error with the below format as a string of error
 
 
@@ -41,9 +44,9 @@ const SigninComponent = () => {
     }
 
     ///////////////////////////Sign-up messages /////////////////////////////////////
-    const showLoading = () => (loading ? <div className= "alert alert-info">Loading... </div> : '') 
-    const showError = () => (error ? <div className= "alert alert-danger">{error} </div> : '') 
-    const showMessage = () => (message ? <div className= "alert alert-info">{message} </div> : '') 
+    const showLoading = () => (loading ? <div className="alert alert-info">Loading... </div> : '')
+    const showError = () => (error ? <div className="alert alert-danger">{error} </div> : '')
+    const showMessage = () => (message ? <div className="alert alert-info">{message} </div> : '')
     ///////////////////////////SIGNUP FORM /////////////////////////////////////
     const signinForm = () => {
         return (
