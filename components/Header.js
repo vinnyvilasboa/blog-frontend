@@ -1,7 +1,9 @@
 //to use hooks 
-import { useState } from 'react';
-import { APP_NAME } from '../config';
+import React, { useState } from 'react';
 import Link from 'next/link'
+import Router from 'next/router'
+import { APP_NAME } from '../config';
+import { signout, isAuth } from '../actions/auth'
 
 import {
     Collapse,
@@ -34,13 +36,18 @@ const Header = () => {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                        <NavItem>
+                        {!isAuth() && (
+                        
+                        <React.Fragment>
+                            <NavItem>
                             <Link href="/signin">
                                 <NavLink>
                                     Sign-In
                                 </NavLink>
                             </Link>
                         </NavItem>
+
+
                         <NavItem>
                             <Link href="/signup">
                                 <NavLink>
@@ -48,10 +55,45 @@ const Header = () => {
                                 </NavLink>
                             </Link>
                         </NavItem>
+                        
+                        </React.Fragment>
+
+
+                        )}
+                        {/* <NavItem>
+                            <Link href="/signin">
+                                <NavLink>
+                                    Sign-In
+                                </NavLink>
+                            </Link>
+                        </NavItem>
+
+
                         <NavItem>
-                            <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                            <Link href="/signup">
+                                <NavLink>
+                                    Sign-Up
+                                </NavLink>
+                            </Link>
+                        </NavItem> */}
+
+
+                        {isAuth() && (
+                            <NavItem>
+                                
+                                    <NavLink style= {{cursor: 'pointer'}}onClick={() => signout(() => Router.replace(`/signup`)) }>
+                                        Sign-Out
+                                    </NavLink>
+                                
+                            </NavItem>
+                        )}
+
+
+                        <NavItem>
+                            <NavLink href="https://github.com/vinnyvilasboa">GitHub</NavLink>
                         </NavItem>
                     </Nav>
+
                 </Collapse>
             </Navbar>
         </div>
